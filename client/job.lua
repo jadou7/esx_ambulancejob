@@ -112,7 +112,7 @@ function OpenMobileAmbulanceActionsMenu()
 								ESX.ShowNotification(_U('not_enough_medikit'))
 							end
                         end, 'medikit')
-                        elseif data.current.value == 'billing' then
+                        elseif data.current.value and Config.EnableBilling == 'billing' then
                             ESX.UI.Menu.Open('dialog', GetCurrentResourceName(), 'billing', {
                                 title = _U('invoice_amount')
                             }, function(data, menu)

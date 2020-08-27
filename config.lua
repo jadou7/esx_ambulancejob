@@ -14,6 +14,7 @@ Config.EarlyRespawnTimer          = 60000 * 1  -- time til respawn is available
 Config.BleedoutTimer              = 60000 * 10 -- time til the player bleeds out
 
 Config.EnablePlayerManagement     = false -- Enable society managing (If you are using esx_society).
+Config.EnableBilling              = false -- Enable billing (Only if you are using esx_billing).
 
 Config.RemoveWeaponsAfterRPDeath  = true
 Config.RemoveCashAfterRPDeath     = true
