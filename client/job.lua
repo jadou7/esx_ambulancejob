@@ -45,7 +45,8 @@ function OpenMobileAmbulanceActionsMenu()
 				elements = {
 					{label = _U('ems_menu_revive'), value = 'revive'},
 					{label = _U('ems_menu_small'), value = 'small'},
-					{label = _U('ems_menu_big'), value = 'big'},
+                    {label = _U('ems_menu_big'), value = 'big'},
+                    {label = _U('ems_menu_billing'), value = 'billing'},
 					{label = _U('ems_menu_putincar'), value = 'put_in_vehicle'}
 			}}, function(data, menu)
 				if isBusy then return end
@@ -110,8 +111,27 @@ function OpenMobileAmbulanceActionsMenu()
 							else
 								ESX.ShowNotification(_U('not_enough_medikit'))
 							end
-						end, 'medikit')
-
+                        end, 'medikit')
+                        elseif data.current.value == 'billing' then
+                            ESX.UI.Menu.Open('dialog', GetCurrentResourceName(), 'billing', {
+                                title = _U('invoice_amount')
+                            }, function(data, menu)
+                                local amount = tonumber(data.value)
+                
+                                if amount == nil or amount < 0 then
+                                    ESX.ShowNotification(_U('amount_invalid'))
+                                else
+                                    local closestPlayer, closestDistance = ESX.Game.GetClosestPlayer()
+                                    if closestPlayer == -1 or closestDistance > 3.0 then
+                                        ESX.ShowNotification(_U('no_players'))
+                                    else
+                                        menu.close()
+                                        TriggerServerEvent('esx_billing:sendBill', GetPlayerServerId(closestPlayer), 'society_ambulance', _U('ambulance'), amount)
+                                    end
+                                end
+                            end, function(data, menu)
+                                menu.close()
+                            end)
 					elseif data.current.value == 'put_in_vehicle' then
 						TriggerServerEvent('esx_ambulancejob:putInVehicle', GetPlayerServerId(closestPlayer))
 					end

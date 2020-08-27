@@ -38,6 +38,7 @@ client_scripts {
 }
 
 dependencies {
+    'esx_billing',
 	'es_extended',
 	'esx_skin',
 	'esx_vehicleshop'
